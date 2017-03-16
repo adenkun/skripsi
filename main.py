@@ -7,7 +7,7 @@ This is a temporary script file.
 import math
 import pandas
 import csv
-
+#komentar
 data = data = pandas.read_csv('master_data.csv')
     
 input_slope = pandas.read_csv('master_slope.csv')
