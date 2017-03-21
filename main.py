@@ -7,8 +7,8 @@ This is a temporary script file.
 import math
 import pandas
 import csv
-#komentar
-data = data = pandas.read_csv('master_data.csv')
+
+data = pandas.read_csv('master_data.csv')
     
 input_slope = pandas.read_csv('master_slope.csv')
 
@@ -18,12 +18,14 @@ slope=float(input_slope['slope'][0])
 
 intercept=float(input_slope['intercept'][0])
 
-SigmoidCoef = 1.00
+data2 = pandas.read_csv('master_data2.csv')
 
-Emdataave = 0.44
-yave = 0.10
+SigmoidCoef = float(data2['SigmoidCoef'][0])
 
-Bias = 1.00
+Emdataave = float(data2['Emdataave'][0])
+yave = float(data2['yave'][0])
+
+Bias = float(data2['Bias'][0])
 
 Emmin = float(data['Emisi'][0])
 Emave = float(data['Emisi'][1])
@@ -65,12 +67,12 @@ Wh11 = float(input_slope['Wh11'][0])
 Wh22 = float(input_slope['Wh22'][0])
 Wh33 = float(input_slope['Wh33'][0])
 Wh44 = float(input_slope['Wh44'][0])
-
+"""
 def normalisasiEmisi(e):
     Emnorm = float((e-Emmin)/(Emmax-Emmin))
-    """print("Emisi Normalisasi: ",Emnorm)"""
+    print("Emisi Normalisasi: ",Emnorm)
     return(Emnorm)
-    
+"""    
 def normalisasiT(a):
     Tnorm = float((a-Tmin)/(Tmax-Tmin))
     """print("T Normalisasi: ",Tnorm)"""
@@ -86,22 +88,22 @@ def normalisasiVWC(c):
     """print("VWC Normalisasi: ",VWCnorm)"""
     return(VWCnorm)
         
-def hiddenh1(a, b, c, d):
+def hiddenh1(a, b, c):
     h1 = float((normalisasiT(a)*WTmin) + (normalisasiEC(b)*WECmin) + (normalisasiVWC(c)*WVWCmin) + (Bias*WBmin))
     """print("h1: ",h1)"""
     return(h1)
     
-def hiddenh2(a, b, c, d):
+def hiddenh2(a, b, c):
     h2 = float(normalisasiT(a)*WTave + normalisasiEC(b)*WECave + normalisasiVWC(c)*WVWCave + Bias*WBave)
     """print("h2: ",h2)"""
     return(h2)
     
-def hiddenh3(a, b, c, d):
+def hiddenh3(a, b, c):
     h3 = float(normalisasiT(a)*WTmax + normalisasiEC(b)*WECmax + normalisasiVWC(c)*WVWCmax + Bias*WBmax)
     """print("h3: ",h3)"""
     return(h3)
     
-def hiddenh4(a, b, c, d):
+def hiddenh4(a, b, c):
     h4 = float(normalisasiT(a)*WTdev + normalisasiEC(b)*WECdev + normalisasiVWC(c)*WVWCdev + Bias*WBdev)
     """print("h4: ",h4)"""
     return(h4)
@@ -110,45 +112,59 @@ def sigmoid(a, b):
     sig = float(1 / (1 + math.exp(-a * b)))
     return(sig)
 
-def h11(a, b, c, d):
-    h11 = float(sigmoid(SigmoidCoef, hiddenh1(a, b, c, d)))
+def h11(a, b, c):
+    h11 = float(sigmoid(SigmoidCoef, hiddenh1(a, b, c)))
     """print("h11: ",h11)"""
     return(h11)
     
-def h22(a, b, c, d):
-    h22 = float(sigmoid(SigmoidCoef, hiddenh2(a, b, c, d)))
+def h22(a, b, c):
+    h22 = float(sigmoid(SigmoidCoef, hiddenh2(a, b, c)))
     """print("h22: ",h22)"""
     return(h22)
     
-def h33(a, b, c, d):
-    h33 = float(sigmoid(SigmoidCoef, hiddenh3(a, b, c, d)))
+def h33(a, b, c):
+    h33 = float(sigmoid(SigmoidCoef, hiddenh3(a, b, c)))
     """print("h33: ",h33)"""
     return(h33)
     
-def h44(a, b, c, d):
-    h44 = float(sigmoid(SigmoidCoef, hiddenh4(a, b, c, d)))
+def h44(a, b, c):
+    h44 = float(sigmoid(SigmoidCoef, hiddenh4(a, b, c)))
     """print("h44: ",h44)"""
     return(h44)
         
-def y(a, b, c, d):
-    y = float(Wh11*h11(a, b, c, d) + Wh22*h22(a, b, c, d) + Wh33*h33(a, b, c, d) + Wh44*h44(a, b, c, d))
+def y(a, b, c):
+    y = float(Wh11*h11(a, b, c) + Wh22*h22(a, b, c) + Wh33*h33(a, b, c) + Wh44*h44(a, b, c))
     """print("Nilai y: ",y)"""
     return(y)
     
-def y2(a, b, c, d):
-    y2 = float((slope * y(a, b, c, d)) + intercept)
+def y2(a, b, c):
+    y2 = float((slope * y(a, b, c)) + intercept)
     """print("Nilai y2: ",y2)"""
     return(y2)
         
-def estimasi(a, b, c, d):
-    estimasi = float(Emmin + y2(a, b, c, d) * (Emmax - Emmin))
-    """print("Estimasi: ",i ,": ", estimasi)"""
+def estimasi(a, b, c):
+    estimasi = float(Emmin + y2(a, b, c) * (Emmax - Emmin))
+    print("Estimasi: ", estimasi)
     return(estimasi)
-        
+    
+T = float(raw_input('Suhu: '))
+EC = float(raw_input('Konduktivitas Listrik: '))
+VWC = float(raw_input('Kelembaban: '))
+
+estimasico2 = estimasi(T, EC, VWC)
+selisih = 0.01
+
+databaru = [(estimasico2, selisih)]   
+with open('hasil.csv', 'a') as filecsv:
+    datafile = csv.writer(filecsv)
+    datafile.writerows(databaru)
+filecsv.close()
+"""        
 def co2(a, b, c, d):
     estimasi1 = estimasi(a, b, c, d)
     co2 = float(abs(Emisi - estimasi1))
-    """print("Selisih",i ,": ", co2)"""
+    print("Estimasi",i ,": ", estimasi1)
+    print("Selisih",i ,": ", co2)
     return(co2)
     
     
@@ -162,11 +178,11 @@ for x in xrange(i, n):
     Emisi = masukan['Emisi'][i]
     i = i + 1
     
-    estimasico2 = estimasi(T, EC, VWC, Emisi)
+    estimasico2 = estimasi(T, EC, VWC)
     selisih = co2(T, EC, VWC, Emisi)
     
     databaru = [(estimasico2, selisih)]   
     with open('hasil.csv', 'a') as filecsv:
         datafile = csv.writer(filecsv)
         datafile.writerows(databaru)
-    filecsv.close()
+    filecsv.close()"""
