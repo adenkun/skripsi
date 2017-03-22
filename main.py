@@ -12,7 +12,9 @@ data = pandas.read_csv('master_data.csv')
     
 input_slope = pandas.read_csv('master_slope.csv')
 
-masukan = pandas.read_csv('master_input.csv')
+masukan1 = raw_input('Nama File: ')
+
+masukan = pandas.read_csv(masukan1 + '.csv')
 
 slope=float(input_slope['slope'][0])
 
@@ -146,7 +148,7 @@ def estimasi(a, b, c):
     estimasi = float(Emmin + y2(a, b, c) * (Emmax - Emmin))
     print("Estimasi: ", estimasi)
     return(estimasi)
-    
+"""    
 T = float(raw_input('Suhu: '))
 EC = float(raw_input('Konduktivitas Listrik: '))
 VWC = float(raw_input('Kelembaban: '))
@@ -165,24 +167,27 @@ def co2(a, b, c, d):
     co2 = float(abs(Emisi - estimasi1))
     print("Estimasi",i ,": ", estimasi1)
     print("Selisih",i ,": ", co2)
-    return(co2)
+    return(co2)  
     
-    
-n = int(raw_input('Jumlah Data: '))
+n = 0
+nilain = open(masukan1 + '.csv')
+reader = csv.DictReader(nilain)
+for x in reader:
+    n += 1
+nilain.close()
 i = 0
 
 for x in xrange(i, n):
     T = masukan['T'][i]
     EC = masukan['EC'][i]
     VWC = masukan['VWC'][i]
-    Emisi = masukan['Emisi'][i]
     i = i + 1
     
     estimasico2 = estimasi(T, EC, VWC)
-    selisih = co2(T, EC, VWC, Emisi)
+    selisih = 0.01
     
     databaru = [(estimasico2, selisih)]   
     with open('hasil.csv', 'a') as filecsv:
         datafile = csv.writer(filecsv)
         datafile.writerows(databaru)
-    filecsv.close()"""
+    filecsv.close()
