@@ -18,13 +18,13 @@ data2 = list(data33)
 input_slope1 = open('master_slope.csv')
 input_slope11 = csv.reader(input_slope1)
 input_slope = list(input_slope11)
-
+"""
 masukan1 = raw_input('Nama File: ')
 
 masukan2 = open(masukan1 + '.csv')
 masukan22 = csv.reader(masukan2)
 masukan = list(masukan22)
-
+"""
 slope = float(input_slope[1][4])
 
 intercept = float(input_slope[1][5])

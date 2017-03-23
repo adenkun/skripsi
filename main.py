@@ -5,70 +5,78 @@ Spyder Editor
 This is a temporary script file.
 """
 import math
-import pandas
 import csv
 
-data = pandas.read_csv('master_data.csv')
-    
-input_slope = pandas.read_csv('master_slope.csv')
+data1 = open('master_data.csv')
+data11 = csv.reader(data1)
+data = list(data11)
 
+data3 = open('master_data2.csv')
+data33 = csv.reader(data3)
+data2 = list(data33)
+    
+input_slope1 = open('master_slope.csv')
+input_slope11 = csv.reader(input_slope1)
+input_slope = list(input_slope11)
+"""
 masukan1 = raw_input('Nama File: ')
 
-masukan = pandas.read_csv(masukan1 + '.csv')
+masukan2 = open(masukan1 + '.csv')
+masukan22 = csv.reader(masukan2)
+masukan = list(masukan22)
+"""
+slope = float(input_slope[1][4])
 
-slope=float(input_slope['slope'][0])
+intercept = float(input_slope[1][5])
 
-intercept=float(input_slope['intercept'][0])
+SigmoidCoef = float(data2[1][0])
 
-data2 = pandas.read_csv('master_data2.csv')
+Emdataave = float(data2[1][1])
 
-SigmoidCoef = float(data2['SigmoidCoef'][0])
+yave = float(data2[1][2])
 
-Emdataave = float(data2['Emdataave'][0])
-yave = float(data2['yave'][0])
+Bias = float(data2[1][3])
 
-Bias = float(data2['Bias'][0])
+Emmin = float(data[1][5])
+Emave = float(data[2][5])
+Emmax = float(data[3][5])
 
-Emmin = float(data['Emisi'][0])
-Emave = float(data['Emisi'][1])
-Emmax = float(data['Emisi'][2])
+Tmin = float(data[1][1])
+Tave = float(data[2][1])
+Tmax = float(data[3][1])
 
-Tmin = float(data['T'][0])
-Tave = float(data['T'][1])
-Tmax = float(data['T'][2])
+ECmin = float(data[1][2])
+ECave = float(data[2][2])
+ECmax = float(data[3][2])
 
-ECmin = float(data['EC'][0])
-ECave = float(data['EC'][1])
-ECmax = float(data['EC'][2])
+VWCmin = float(data[1][3])
+VWCave = float(data[2][3])
+VWCmax = float(data[3][3])
 
-VWCmin = float(data['VWC'][0])
-VWCave = float(data['VWC'][1])
-VWCmax = float(data['VWC'][2])
+WTmin = float(data[4][1])
+WTave = float(data[5][1])
+WTmax = float(data[6][1])
+WTdev = float(data[7][1])
 
-WTmin = float(data['T'][4])
-WTave = float(data['T'][5])
-WTmax = float(data['T'][6])
-WTdev = float(data['T'][7])
+WECmin = float(data[4][2])
+WECave = float(data[5][2])
+WECmax = float(data[6][2])
+WECdev = float(data[7][2])
 
-WECmin = float(data['EC'][4])
-WECave = float(data['EC'][5])
-WECmax = float(data['EC'][6])
-WECdev = float(data['EC'][7])
+WVWCmin = float(data[4][3])
+WVWCave = float(data[5][3])
+WVWCmax = float(data[6][3])
+WVWCdev = float(data[7][3])
 
-WVWCmin = float(data['VWC'][4])
-WVWCave = float(data['VWC'][5])
-WVWCmax = float(data['VWC'][6])
-WVWCdev = float(data['VWC'][7])
+WBmin = float(data[4][4])
+WBave = float(data[5][4])
+WBmax = float(data[6][4])
+WBdev = float(data[7][4])
 
-WBmin = float(data['Bias'][4])
-WBave = float(data['Bias'][5])
-WBmax = float(data['Bias'][6])
-WBdev = float(data['Bias'][7])
-
-Wh11 = float(input_slope['Wh11'][0])
-Wh22 = float(input_slope['Wh22'][0])
-Wh33 = float(input_slope['Wh33'][0])
-Wh44 = float(input_slope['Wh44'][0])
+Wh11 = float(input_slope[1][0])
+Wh22 = float(input_slope[1][1])
+Wh33 = float(input_slope[1][2])
+Wh44 = float(input_slope[1][3])
 """
 def normalisasiEmisi(e):
     Emnorm = float((e-Emmin)/(Emmax-Emmin))
@@ -148,7 +156,7 @@ def estimasi(a, b, c):
     estimasi = float(Emmin + y2(a, b, c) * (Emmax - Emmin))
     print("Estimasi: ", estimasi)
     return(estimasi)
-"""    
+    
 T = float(raw_input('Suhu: '))
 EC = float(raw_input('Konduktivitas Listrik: '))
 VWC = float(raw_input('Kelembaban: '))
@@ -175,14 +183,15 @@ reader = csv.DictReader(nilain)
 for x in reader:
     n += 1
 nilain.close()
-i = 0
 
-for x in xrange(i, n):
-    T = masukan['T'][i]
-    EC = masukan['EC'][i]
-    VWC = masukan['VWC'][i]
+i = 1
+
+for x in xrange(i, (n+1)):
+    T = float(masukan[i][0])
+    EC = float(masukan[i][1])
+    VWC = float(masukan[i][2])
     i = i + 1
-    
+	
     estimasico2 = estimasi(T, EC, VWC)
     selisih = 0.01
     
@@ -191,3 +200,4 @@ for x in xrange(i, n):
         datafile = csv.writer(filecsv)
         datafile.writerows(databaru)
     filecsv.close()
+"""
