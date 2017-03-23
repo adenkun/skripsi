@@ -156,7 +156,7 @@ def estimasi(a, b, c):
     estimasi = float(Emmin + y2(a, b, c) * (Emmax - Emmin))
     print("Estimasi: ", estimasi)
     return(estimasi)
-"""    
+    
 T = float(raw_input('Suhu: '))
 EC = float(raw_input('Konduktivitas Listrik: '))
 VWC = float(raw_input('Kelembaban: '))
@@ -200,3 +200,4 @@ for x in xrange(i, (n+1)):
         datafile = csv.writer(filecsv)
         datafile.writerows(databaru)
     filecsv.close()
+"""
