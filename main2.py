@@ -18,13 +18,13 @@ data2 = list(data33)
 input_slope1 = open('master_slope.csv')
 input_slope11 = csv.reader(input_slope1)
 input_slope = list(input_slope11)
-"""
+
 masukan1 = raw_input('Nama File: ')
 
 masukan2 = open(masukan1 + '.csv')
 masukan22 = csv.reader(masukan2)
 masukan = list(masukan22)
-"""
+
 slope = float(input_slope[1][4])
 
 intercept = float(input_slope[1][5])
@@ -85,17 +85,14 @@ def normalisasiEmisi(e):
 """    
 def normalisasiT(a):
     Tnorm = float((a-Tmin)/(Tmax-Tmin))
-    """print("T Normalisasi: ",Tnorm)"""
     return(Tnorm)
     
 def normalisasiEC(b):
     ECnorm = float((b-ECmin)/(ECmax-ECmin))
-    """print("EC Normalisasi: ",ECnorm)"""
     return(ECnorm)
         
 def normalisasiVWC(c):
     VWCnorm = float((c-VWCmin)/(VWCmax-VWCmin))
-    """print("VWC Normalisasi: ",VWCnorm)"""
     return(VWCnorm)
         
 def hiddenh1(a, b, c):
@@ -156,7 +153,7 @@ def estimasi(a, b, c):
     estimasi = float(Emmin + y2(a, b, c) * (Emmax - Emmin))
     print("Estimasi: ", estimasi)
     return(estimasi)
-    
+"""    
 T = float(raw_input('Suhu: '))
 EC = float(raw_input('Konduktivitas Listrik: '))
 VWC = float(raw_input('Kelembaban: '))
@@ -169,13 +166,14 @@ with open('hasil.csv', 'a') as filecsv:
     datafile = csv.writer(filecsv)
     datafile.writerows(databaru)
 filecsv.close()
-"""        
+       
 def co2(a, b, c, d):
     estimasi1 = estimasi(a, b, c, d)
     co2 = float(abs(Emisi - estimasi1))
     print("Estimasi",i ,": ", estimasi1)
     print("Selisih",i ,": ", co2)
     return(co2)  
+""" 
     
 n = 0
 nilain = open(masukan1 + '.csv')
@@ -200,4 +198,3 @@ for x in xrange(i, (n+1)):
         datafile = csv.writer(filecsv)
         datafile.writerows(databaru)
     filecsv.close()
-"""
